@@ -53,7 +53,7 @@ if (fusion_is_element_enabled('PLYRAE_plyr_audio') && !class_exists('PLYRAE_Plyr
                 PLYRAE_PLUGIN_URL . 'assets/js/plyr.js',
                 PLYRAE_PLUGIN_DIR . 'assets/js/plyr.js',
                 array('jquery'),
-                '3.3',
+                '3.4',
                 true
             );
 

@@ -69,7 +69,7 @@ class Plyr_Avada_Element_Run
     public function enqueue_frontend_scripts_and_styles(): void
     {
         wp_enqueue_style('plyrae-frontend-styles-min', PLYRAE_PLUGIN_URL . 'core/includes/assets/css/plyrae-frontend-styles.min.css', array(), PLYRAE_VERSION, 'all');
-        wp_enqueue_style('plyrae-frontend-styles', PLYRAE_PLUGIN_URL . 'core/includes/assets/css/frontend-styles.css', array(), PLYRAE_VERSION, 'all');
+        wp_enqueue_style('frontend-styles', PLYRAE_PLUGIN_URL . 'core/includes/assets/css/frontend-styles.css', array('plyrae-frontend-styles-min'), PLYRAE_VERSION, 'all');
         wp_enqueue_script('plyrae-frontend-scripts', PLYRAE_PLUGIN_URL . 'core/includes/assets/js/frontend-scripts.js', array('jquery'), PLYRAE_VERSION, true);
         wp_localize_script('plyrae-frontend-scripts', 'plyrae', array(
             'demo_var' => __('This is some demo text coming from the backend through a variable within javascript.', 'plyr-avada-element'),

@@ -2,13 +2,13 @@
 /**
  * @package       PLYRAE
  * @author        Michel Many
- * @version       1.0.0
+ * @version       1.0.1
  *
  * @wordpress-plugin
  * Plugin Name:   Plyr.io Avada Element
  * Plugin URI:    https://michelmany.com
  * Description:   This is a Plyr.io Audio Player Element for Avada
- * Version:       1.0.0
+ * Version:       1.0.1
  * Author:        Michel Many
  * Author URI:    https://michelmany.com
  * Text Domain:   plyr-avada-element
@@ -21,7 +21,7 @@ if (!defined('ABSPATH')) {
 }
 
 define('PLYRAE_NAME', 'Plyr Avada Element');
-define('PLYRAE_VERSION', '1.0.0');
+define('PLYRAE_VERSION', '1.0.1');
 define('PLYRAE_PLUGIN_FILE', __FILE__);
 define('PLYRAE_PLUGIN_BASE', plugin_basename(PLYRAE_PLUGIN_FILE));
 define('PLYRAE_PLUGIN_DIR', plugin_dir_path(PLYRAE_PLUGIN_FILE));

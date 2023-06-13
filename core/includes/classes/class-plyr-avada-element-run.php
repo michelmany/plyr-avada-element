@@ -1,7 +1,9 @@
 <?php
 
 // Exit if accessed directly.
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH')) {
+    exit;
+}
 
 /**
  * Class Plyr_Avada_Element_Run
@@ -38,15 +40,18 @@ class Plyr_Avada_Element_Run
     /**
      * Registers all WordPress and plugin related hooks
      *
-     * @access    private
-     * @return    void
-     * @since    1.0.0
+     * @access private
+     * @return void
+     * @since 1.0.0
      */
     private function add_hooks(): void
     {
         add_action('wp_enqueue_scripts', array($this, 'enqueue_frontend_scripts_and_styles'), 20);
         add_action('wp_ajax_nopriv_my_demo_ajax_call', array($this, 'my_demo_ajax_call_callback'), 20);
         add_action('wp_ajax_my_demo_ajax_call', array($this, 'my_demo_ajax_call_callback'), 20);
+
+        add_action('fusion_builder_before_init', array($this, 'mapFusionElementPlyrAudio'), 99);
+        add_action('init', array($this, 'mapFusionElementPlyrAudio'), 99);
     }
 
     /**
@@ -61,9 +66,9 @@ class Plyr_Avada_Element_Run
     /**
      * Enqueue the frontend related scripts and styles for this plugin.
      *
-     * @access    public
-     * @return    void
-     * @since    1.0.0
+     * @access public
+     * @return void
+     * @since 1.0.0
      *
      */
     public function enqueue_frontend_scripts_and_styles(): void
@@ -77,13 +82,35 @@ class Plyr_Avada_Element_Run
         ));
     }
 
+    public function mapFusionElementPlyrAudio(): void
+    {
+        fusion_builder_map(
+            [
+                'name' => esc_attr__('Plyr Audio', 'plyr-avada-element'),
+                'shortcode' => 'plyrae_audio_player',
+                'icon' => 'fusiona-tag',
+                'inline_editor' => true,
+                'params' => [
+                    [
+                        'type' => 'textfield',
+                        'heading' => esc_attr__('Taxonomy', 'avada_addons'),
+                        'description' => esc_attr__('Write taxonomy slug to filter', 'avada_addons'),
+                        'param_name' => 'taxonomy',
+                        'value' => '',
+                    ],
+
+                ],
+            ]
+        );
+    }
+
 
     /**
      * The callback function for my_demo_ajax_call
      *
-     * @access    public
-     * @return    void
-     * @since    1.0.0
+     * @access public
+     * @return void
+     * @since 1.0.0
      *
      */
     public function my_demo_ajax_call_callback(): void

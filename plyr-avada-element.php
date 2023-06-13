@@ -16,7 +16,9 @@
  */
 
 // Exit if accessed directly.
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH')) {
+    exit;
+}
 
 define('PLYRAE_NAME', 'Plyr Avada Element');
 define('PLYRAE_VERSION', '1.0.0');
@@ -30,17 +32,19 @@ define('PLYRAE_PLUGIN_URL', plugin_dir_url(PLYRAE_PLUGIN_FILE));
  */
 require_once PLYRAE_PLUGIN_DIR . 'core/class-plyr-avada-element.php';
 
-/**
- * The main function to load the only instance
- * of our master class.
- *
- * @return  object|Plyr_Avada_Element
- * @since   1.0.0
- * @author  Michel Many
- */
-function PLYRAE()
+function PLYRAE_activate(): void
 {
-    return Plyr_Avada_Element::instance();
+    if (class_exists('FusionBuilder')) {
+        Plyr_Avada_Element::instance();
+    }
 }
+add_action('after_setup_theme', 'PLYRAE_activate', 11);
 
-PLYRAE();
+
+function initPlyrElements(): void
+{
+    foreach (glob(PLYRAE_PLUGIN_DIR . 'elements/*.php', GLOB_NOSORT) as $filename) {
+        require_once $filename;
+    }
+}
+add_action('fusion_builder_shortcodes_init', 'initPlyrElements');

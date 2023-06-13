@@ -2,6 +2,7 @@
 Frontend related javascript
 -------------------------*/
 
+
 (function( $ ) {
 
 	"use strict";
@@ -21,5 +22,4 @@ Frontend related javascript
             }
         });
     });
-
 })( jQuery );

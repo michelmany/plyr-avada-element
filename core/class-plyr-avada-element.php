@@ -99,6 +99,11 @@ if (!class_exists('Plyr_Avada_Element')) :
                  * after the successful plugin setup
                  */
                 do_action('PLYRAE/plugin_loaded');
+
+                if (function_exists('fusion_builder_auto_activate_element')) {
+                    fusion_builder_auto_activate_element('PLYRAE_plyr_audio');
+                }
+
             }
 
             return self::$instance;

@@ -5,3 +5,7 @@ Frontend related CSS
 .plyr--audio.plyr {
     border: 1px solid #000000 !important;
 }
+
+:root {
+    --plyr-color-main: var(--theme-main-color, #333) !important;
+}

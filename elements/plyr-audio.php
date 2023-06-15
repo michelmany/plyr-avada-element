@@ -20,6 +20,7 @@ if (fusion_is_element_enabled('PLYRAE_plyr_audio') && !class_exists('PLYRAE_Plyr
          * @param array $args Shortcode paramters.
          * @param string $content Content between shortcode.
          * @return string HTML output.
+         * @throws JsonException
          * @since 1.0
          */
         public function render($args, $content = '')
@@ -27,6 +28,11 @@ if (fusion_is_element_enabled('PLYRAE_plyr_audio') && !class_exists('PLYRAE_Plyr
             global $fusion_library, $fusion_settings;
 
             $this->args = $args;
+
+            if (!empty($this->args['dynamic_params'])) {
+                (array) $params = json_decode(fusion_decode_if_needed($this->args['dynamic_params']), true, 512, JSON_THROW_ON_ERROR);
+                $this->args['plyr_file_url'] = get_field($params['plyr_file_url']['field']);
+            }
 
             $html = '';
 
@@ -93,6 +99,7 @@ function mapPlyrAudio(): void
                     'heading' => esc_attr__('Audio File URL', 'plyr-avada-element'),
                     'param_name' => 'plyr_file_url',
                     'value' => '',
+                    'dynamic_data' => true,
                 ),
             ),
         )

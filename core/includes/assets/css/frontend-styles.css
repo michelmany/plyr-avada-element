@@ -1,11 +1,17 @@
 /*------------------
-Frontend related CSS
+Frontend related CSS - Debug Version 3.1
 ------------------*/
-
-.plyr--audio.plyr {
-    border: 1px solid #000000 !important;
-}
-
+/* Basic theme color variables */
 :root {
-    --plyr-color-main: var(--theme-main-color, #333) !important;
+  --plyr-color-main: #333 !important;
+  --plyr-range-fill-background: #333 !important;
+  --plyr-audio-control-color: #333 !important;
+  --plyr-audio-control-hover-color: #555 !important;
+  --plyr-audio-control-active-color: #111 !important;
+  --plyr-audio-control-disabled-color: #999 !important;
+  --plyr-audio-control-background: #fff !important;
+  --plyr-audio-control-hover-background: #f0f0f0 !important;
+  --plyr-audio-control-color-hover: #fff !important;
+  --plyr-audio-control-color-active: #fff !important;
+  --plyr-audio-control-color-disabled: #ccc !important;
 }

@@ -1,153 +1,148 @@
 <?php
 
 // Exit if accessed directly.
-if (!defined('ABSPATH')) {
-    exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
 }
 
-if (!class_exists('Plyr_Avada_Element')) :
+if ( ! class_exists( 'Plyr_Avada_Element' ) ) :
 
-    /**
-     * Main Plyr_Avada_Element Class.
-     *
-     * @package        PLYRAE
-     * @subpackage    Classes/Plyr_Avada_Element
-     * @since        1.0.0
-     * @author        Michel Many
-     */
-    final class Plyr_Avada_Element
-    {
+	/**
+	 * Main Plyr_Avada_Element Class.
+	 *
+	 * @package        PLYRAE
+	 * @subpackage    Classes/Plyr_Avada_Element
+	 * @since        1.0.0
+	 * @author        Michel Many
+	 */
+	final class Plyr_Avada_Element {
 
-        /**
-         * The real instance
-         *
-         * @access private
-         * @since 1.0.0
-         * @var object|Plyr_Avada_Element
-         */
-        private static $instance;
 
-        /**
-         * PLYRAE helpers object.
-         *
-         * @access public
-         * @since 1.0.0
-         * @var object|Plyr_Avada_Element_Helpers
-         */
-        public $helpers;
+		/**
+		 * The real instance
+		 *
+		 * @access private
+		 * @since 1.0.0
+		 * @var object|Plyr_Avada_Element
+		 */
+		private static $instance;
 
-        /**
-         * PLYRAE settings object.
-         *
-         * @access public
-         * @since 1.0.0
-         * @var object|Plyr_Avada_Element_Settings
-         */
-        public $settings;
+		/**
+		 * PLYRAE helpers object.
+		 *
+		 * @access public
+		 * @since 1.0.0
+		 * @var object|Plyr_Avada_Element_Helpers
+		 */
+		public $helpers;
 
-        /**
-         * Throw error on object clone.
-         *
-         * Cloning instances of the class is forbidden.
-         *
-         * @access public
-         * @return void
-         * @since 1.0.0
-         */
-        public function __clone()
-        {
-            _doing_it_wrong(__FUNCTION__, __('You are not allowed to clone this class.', 'plyr-avada-element'), '1.0.0');
-        }
+		/**
+		 * PLYRAE settings object.
+		 *
+		 * @access public
+		 * @since 1.0.0
+		 * @var object|Plyr_Avada_Element_Settings
+		 */
+		public $settings;
 
-        /**
-         * Disable unserializing of the class.
-         *
-         * @access public
-         * @return void
-         * @since 1.0.0
-         */
-        public function __wakeup()
-        {
-            _doing_it_wrong(__FUNCTION__, __('You are not allowed to unserialize this class.', 'plyr-avada-element'), '1.0.0');
-        }
+		/**
+		 * Throw error on object clone.
+		 *
+		 * Cloning instances of the class is forbidden.
+		 *
+		 * @access public
+		 * @return void
+		 * @since 1.0.0
+		 */
+		public function __clone() {
+			_doing_it_wrong( __FUNCTION__, __( 'You are not allowed to clone this class.', 'plyr-avada-element' ), '1.0.0' );
+		}
 
-        /**
-         * Main Plyr_Avada_Element Instance.
-         *
-         * Insures that only one instance of Plyr_Avada_Element exists in memory at any one
-         * time. Also prevents needing to define globals all over the place.
-         *
-         * @access public
-         * @return object|Plyr_Avada_Element The one true Plyr_Avada_Element
-         * @since 1.0.0
-         * @static
-         */
-        public static function instance()
-        {
-            if (!isset(self::$instance) && !(self::$instance instanceof Plyr_Avada_Element)) {
-                self::$instance = new Plyr_Avada_Element;
-                self::$instance->base_hooks();
-                self::$instance->includes();
-                self::$instance->helpers = new Plyr_Avada_Element_Helpers();
-                self::$instance->settings = new Plyr_Avada_Element_Settings();
+		/**
+		 * Disable unserializing of the class.
+		 *
+		 * @access public
+		 * @return void
+		 * @since 1.0.0
+		 */
+		public function __wakeup() {
+			_doing_it_wrong( __FUNCTION__, __( 'You are not allowed to unserialize this class.', 'plyr-avada-element' ), '1.0.0' );
+		}
 
-                //Fire the plugin logic
-                new Plyr_Avada_Element_Run();
+		/**
+		 * Main Plyr_Avada_Element Instance.
+		 *
+		 * Insures that only one instance of Plyr_Avada_Element exists in memory at any one
+		 * time. Also prevents needing to define globals all over the place.
+		 *
+		 * @access public
+		 * @return object|Plyr_Avada_Element The one true Plyr_Avada_Element
+		 * @since 1.0.0
+		 * @static
+		 */
+		public static function instance() {
+			if ( ! isset( self::$instance ) && ! ( self::$instance instanceof Plyr_Avada_Element ) ) {
+				self::$instance = new Plyr_Avada_Element();
+				self::$instance->base_hooks();
+				self::$instance->includes();
+				self::$instance->helpers  = new Plyr_Avada_Element_Helpers();
+				self::$instance->settings = new Plyr_Avada_Element_Settings();
 
-                /**
-                 * Fire a custom action to allow dependencies
-                 * after the successful plugin setup
-                 */
-                do_action('PLYRAE/plugin_loaded');
+				//Fire the plugin logic
+				new Plyr_Avada_Element_Run();
 
-                if (function_exists('fusion_builder_auto_activate_element')) {
-                    fusion_builder_auto_activate_element('PLYRAE_plyr_audio');
-                }
+				/**
+				 * Fire a custom action to allow dependencies
+				 * after the successful plugin setup
+				 */
+				do_action( 'PLYRAE/plugin_loaded' );
 
-            }
+				// Auto-activate element only once during plugin activation
+				// Remove this from here as it should only be done during admin initialization
+				// if (function_exists('fusion_builder_auto_activate_element')) {
+				//     fusion_builder_auto_activate_element('PLYRAE_plyr_audio');
+				// }
 
-            return self::$instance;
-        }
+			}
 
-        /**
-         * Include required files.
-         *
-         * @access  private
-         * @return  void
-         * @since   1.0.0
-         */
-        private function includes(): void
-        {
-            require_once PLYRAE_PLUGIN_DIR . 'core/includes/classes/class-plyr-avada-element-helpers.php';
-            require_once PLYRAE_PLUGIN_DIR . 'core/includes/classes/class-plyr-avada-element-settings.php';
+			return self::$instance;
+		}
 
-            require_once PLYRAE_PLUGIN_DIR . 'core/includes/classes/class-plyr-avada-element-run.php';
-        }
+		/**
+		 * Include required files.
+		 *
+		 * @access  private
+		 * @return  void
+		 * @since   1.0.0
+		 */
+		private function includes(): void {
+			require_once PLYRAE_PLUGIN_DIR . 'core/includes/classes/class-plyr-avada-element-helpers.php';
+			require_once PLYRAE_PLUGIN_DIR . 'core/includes/classes/class-plyr-avada-element-settings.php';
 
-        /**
-         * Add base hooks for the core functionality
-         *
-         * @access  private
-         * @return  void
-         * @since   1.0.0
-         */
-        private function base_hooks(): void
-        {
-            add_action('plugins_loaded', array(self::$instance, 'load_textdomain'));
-        }
+			require_once PLYRAE_PLUGIN_DIR . 'core/includes/classes/class-plyr-avada-element-run.php';
+		}
 
-        /**
-         * Loads the plugin language files.
-         *
-         * @access  public
-         * @return  void
-         * @since   1.0.0
-         */
-        public function load_textdomain()
-        {
-            load_plugin_textdomain('plyr-avada-element', FALSE, dirname(plugin_basename(PLYRAE_PLUGIN_FILE)) . '/languages/');
-        }
+		/**
+		 * Add base hooks for the core functionality
+		 *
+		 * @access  private
+		 * @return  void
+		 * @since   1.0.0
+		 */
+		private function base_hooks(): void {
+			add_action( 'plugins_loaded', array( self::$instance, 'load_textdomain' ) );
+		}
 
-    }
+		/**
+		 * Loads the plugin language files.
+		 *
+		 * @access  public
+		 * @return  void
+		 * @since   1.0.0
+		 */
+		public function load_textdomain() {
+			load_plugin_textdomain( 'plyr-avada-element', false, dirname( plugin_basename( PLYRAE_PLUGIN_FILE ) ) . '/languages/' );
+		}
+	}
 
 endif;

@@ -133,9 +133,10 @@ function mapPlyrAudio(): void {
 		)
 	);
 
-	// Auto-activate element only when mapping, not on every page load
-	if ( function_exists( 'fusion_builder_auto_activate_element' ) ) {
+	// Auto-activate element only once, with proper guards
+	if ( function_exists( 'fusion_builder_auto_activate_element' ) && ! get_option( 'plyrae_element_activated' ) ) {
 		fusion_builder_auto_activate_element( 'PLYRAE_plyr_audio' );
+		update_option( 'plyrae_element_activated', true, false ); // autoload = false
 	}
 }
 

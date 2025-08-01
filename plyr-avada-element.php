@@ -50,6 +50,18 @@ function plyrae_activate() {
 add_action( 'after_setup_theme', 'plyrae_activate', 11 );
 
 /**
+ * Clean up plugin options on deactivation.
+ *
+ * @since 1.2.1
+ * @return void
+ */
+function plyrae_deactivate() {
+	// Clean up activation flag so element can be re-activated if needed
+	delete_option( 'plyrae_element_activated' );
+}
+register_deactivation_hook( __FILE__, 'plyrae_deactivate' );
+
+/**
  * Initialize Plyr Elements.
  *
  * Loads all element files from the elements directory.
